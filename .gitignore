@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+work/course_data.json
+work/app_check.js
+*.zip
+
+# 原始课程文件只留在本机；仓库内已有逐段整理的 Markdown 和原图。
+/01黄羽学姐西马复习笔记.docx
