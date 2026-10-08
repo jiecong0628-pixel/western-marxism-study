@@ -32,6 +32,7 @@ ch = {c['key']: c for c in data['chapters']}
 used = {k: set() for k in ch}
 foundation_used = set()
 max_source = (0, 0)
+daily_source = set()
 for day in data['days']:
     if day['chapter'] == 'base':
         foundation_used.update(day['sections'])
@@ -46,6 +47,7 @@ for day in data['days']:
         end = int(match.group(2) or match.group(1))
         assert 1 <= start <= end <= 1225
         ids.extend(range(start, end + 1))
+    daily_source.update(ids)
     count = sum(len(source[i - 1]['text']) for i in dict.fromkeys(ids))
     max_source = max(max_source, (count, day['day']))
     long_read = count > 1500
@@ -62,6 +64,7 @@ for day in data['days']:
 assert foundation_used == set(range(18))
 assert all(used[k] == set(range(len(c['sections']))) for k, c in ch.items())
 assert max_source[0] <= 2300
+assert daily_source == set(range(1, 1226)), "每日原文漏排"
 
 category = Counter(q['cat'] for q in data['quiz'])
 assert category['基础'] == 9
