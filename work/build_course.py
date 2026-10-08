@@ -140,5 +140,7 @@ with Path('outputs/西马记忆卡片.csv').open(newline='',encoding='utf-8') as
  cards=[dict(front=row[0],back=row[1],tag=row[2]) for row in csv.reader(fp) if len(row)==3 and not row[0].startswith('#')]
 assert all(x['front'] and x['back'] for x in cards)
 data=dict(source=source,foundations=found,chapters=chapters,quiz=quiz,essays=list(questions.values()),real=real,days=days,images=images,imagePositions=image_positions,refs=refs,methods=methods,cards=cards)
+from build_question_bank import enhance
+enhance(data)
 Path('work/course_data.json').write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8')
-print('chapters',[(x['name'],x['chars'],len(x['sections'])) for x in chapters]);print('foundations',len(found),'quiz',len(quiz),'essays',len(questions),'cards',len(cards),'days',len(days),'source',len(source))
+print('chapters',[(x['name'],x['chars'],len(x['sections'])) for x in chapters]);print('foundations',len(found),'quiz',len(data['quiz']),'essays',len(data['essays']),'cards',len(cards),'days',len(days),'source',len(source))
